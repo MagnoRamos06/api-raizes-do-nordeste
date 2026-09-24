@@ -185,11 +185,13 @@ Para criar uma nova revisão após alterar os modelos, use `alembic revision --a
 - [Análise e requisitos](docs/requisitos.md)
 - [Decisões de projeto](docs/decisoes-de-projeto.md)
 - [Diagramas](docs/diagramas.md)
+- [Especificação do fluxo crítico](docs/fluxo-critico.md)
 - [Plano de testes](docs/plano-de-testes.md)
 - [Evidência da execução](docs/evidencia-testes.md)
 - [Relatório técnico](docs/relatorio-tecnico.md)
+- [Relatório acadêmico em PDF](5023493_Projeto_Back_End.PDF)
 
-O DER, o diagrama de casos de uso e a sequência de criação do pedido estão disponíveis em `docs/` nos formatos SVG.
+O DER, os diagramas de classes e de casos de uso e a sequência de criação do pedido estão disponíveis em `docs/` no formato SVG. A especificação do fluxo crítico descreve pré-condições, pós-condições, alternativas, exceções e regras de negócio.
 
 ## Segurança e privacidade
 
