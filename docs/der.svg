@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1150" viewBox="0 0 1700 1150" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama Entidade-Relacionamento da API Raízes do Nordeste</title>
+  <desc id="desc">Dez entidades relacionais com chaves, atributos e relações um para muitos.</desc>
+  <defs>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#18324f}.title{font-size:31px;font-weight:700}.sub{font-size:16px;fill:#526a82}.card{fill:#fff;stroke:#355f87;stroke-width:2.4;rx:11}.head{fill:#e7f0f8}.name{font-size:18px;font-weight:700}.fields{font-size:14px}.pk{font-weight:700;fill:#0d6d5c}.fk{font-weight:700;fill:#855d11}.edge{fill:none;stroke:#607d93;stroke-width:2}.edgeLabel{font-size:15px;font-weight:700;fill:#244d75;stroke:#f7f9fc;stroke-width:4px;paint-order:stroke}.legend{font-size:13px;fill:#53697e}
+    </style>
+    <marker id="arr" markerWidth="11" markerHeight="11" refX="9" refY="3.5" orient="auto"><path d="M0 0 L0 7 L10 3.5Z" fill="#607d93"/></marker>
+  </defs>
+  <rect width="1700" height="1150" fill="#f7f9fc"/>
+  <text class="title" x="48" y="52">DER - Raízes do Nordeste</text>
+  <text class="sub" x="48" y="82">Modelo físico alinhado aos modelos SQLModel e à migração Alembic</text>
+  <g class="edge">
+    <path d="M385 230 H470" marker-end="url(#arr)"/><text class="edgeLabel" x="400" y="216">1 : N</text>
+    <path d="M830 230 H915" marker-end="url(#arr)"/><text class="edgeLabel" x="846" y="216">1 : N</text>
+    <path d="M1265 230 H1320" marker-end="url(#arr)"/><text class="edgeLabel" x="1270" y="216">N : 1</text>
+    <path d="M350 460 V385 H650 V350" marker-end="url(#arr)"/><text class="edgeLabel" x="382" y="374">1 : N</text>
+    <path d="M385 545 H470" marker-end="url(#arr)"/><text class="edgeLabel" x="400" y="531">1 : N</text>
+    <path d="M700 350 V410 H1090 V460" marker-end="url(#arr)"/><text class="edgeLabel" x="1015" y="400">1 : N</text>
+  </g>
+
+  <g transform="translate(45 130)"><rect class="card" width="340" height="190"/><path class="head" d="M11 0 H329 Q340 0 340 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">USUARIO</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields" x="18" y="103">nome, email (único)</text><text class="fields" x="18" y="131">senha_hash, perfil</text><text class="fields" x="18" y="159">Dados de autenticação e papel</text></g>
+  <g transform="translate(470 130)"><rect class="card" width="360" height="220"/><path class="head" d="M11 0 H349 Q360 0 360 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">PEDIDO</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK usuario_id, FK unidade_id</text><text class="fields" x="18" y="131">canal_pedido, status</text><text class="fields" x="18" y="159">total, desconto_fidelidade</text><text class="fields" x="18" y="187">criado_em</text></g>
+  <g transform="translate(915 130)"><rect class="card" width="350" height="190"/><path class="head" d="M11 0 H339 Q350 0 350 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">ITEM_PEDIDO</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK pedido_id, FK produto_id</text><text class="fields" x="18" y="131">quantidade &gt; 0</text><text class="fields" x="18" y="159">preco_unitario (snapshot)</text></g>
+  <g transform="translate(1320 130)"><rect class="card" width="330" height="185"/><path class="head" d="M11 0 H319 Q330 0 330 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">PRODUTO</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields" x="18" y="103">nome, descricao</text><text class="fields" x="18" y="131">preco &gt; 0, ativo</text></g>
+  <g transform="translate(45 460)"><rect class="card" width="340" height="170"/><path class="head" d="M11 0 H329 Q340 0 340 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">UNIDADE</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields" x="18" y="103">nome, endereco, ativa</text><text class="fields" x="18" y="131">Local de preparo e retirada</text></g>
+  <g transform="translate(470 460)"><rect class="card" width="360" height="185"/><path class="head" d="M11 0 H349 Q360 0 360 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">ESTOQUE</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK unidade_id, FK produto_id</text><text class="fields" x="18" y="131">quantidade &gt;= 0</text><text class="fields" x="18" y="159">único (unidade_id, produto_id)</text></g>
+  <g transform="translate(915 460)"><rect class="card" width="350" height="185"/><path class="head" d="M11 0 H339 Q350 0 350 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">PAGAMENTO</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK pedido_id</text><text class="fields" x="18" y="131">status, referencia_mock</text><text class="fields" x="18" y="159">valor, payload_resposta, criado_em</text></g>
+  <g transform="translate(45 800)"><rect class="card" width="340" height="180"/><path class="head" d="M11 0 H329 Q340 0 340 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">AUDITORIA</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK usuario_id</text><text class="fields" x="18" y="131">acao, entidade, entidade_id</text><text class="fields" x="18" y="159">detalhes, criado_em</text></g>
+  <g transform="translate(470 800)"><rect class="card" width="360" height="180"/><path class="head" d="M11 0 H349 Q360 0 360 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">CONSENTIMENTO_FIDELIDADE</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK usuario_id</text><text class="fields" x="18" y="131">consentido</text><text class="fields" x="18" y="159">registrado_em (histórico)</text></g>
+  <g transform="translate(915 800)"><rect class="card" width="350" height="205"/><path class="head" d="M11 0 H339 Q350 0 350 11 V45 H0 V11 Q0 0 11 0Z"/><text class="name" x="16" y="30">MOVIMENTO_FIDELIDADE</text><text class="fields pk" x="18" y="75">PK id</text><text class="fields fk" x="18" y="103">FK usuario_id, FK pedido_id opcional</text><text class="fields" x="18" y="131">tipo: GANHO / RESGATE / ESTORNO</text><text class="fields" x="18" y="159">pontos &gt; 0, criado_em</text><text class="fields" x="18" y="187">único (pedido_id, tipo)</text></g>
+
+  <rect x="1300" y="780" width="340" height="230" rx="10" fill="#edf3f8" stroke="#c7d5e2"/>
+  <text x="1320" y="812" font-size="16" font-weight="700">Legenda e cardinalidades</text>
+  <text class="legend" x="1320" y="846">PK - chave primária</text>
+  <text class="legend" x="1320" y="872">FK - chave estrangeira</text>
+  <text class="legend" x="1320" y="898">1 : N - um registro possui vários</text>
+  <text class="legend" x="1320" y="924">N : 1 - vários itens apontam ao</text>
+  <text class="legend" x="1320" y="944">mesmo produto</text>
+  <text class="legend" x="1320" y="978">* pedido_id é opcional no extrato</text>
+  <text class="legend" x="48" y="1060">Relações: USUARIO 1:N PEDIDO, AUDITORIA, CONSENTIMENTO_FIDELIDADE e MOVIMENTO_FIDELIDADE.</text>
+  <text class="legend" x="48" y="1084">UNIDADE 1:N PEDIDO/ESTOQUE; PRODUTO 1:N ITEM_PEDIDO/ESTOQUE; PEDIDO 1:N ITEM_PEDIDO/PAGAMENTO/MOVIMENTO_FIDELIDADE*.</text>
+  <text class="legend" x="48" y="1108">O preço do item preserva o valor de compra; restrições impedem saldo negativo e saldo duplicado por produto/unidade.</text>
+</svg>

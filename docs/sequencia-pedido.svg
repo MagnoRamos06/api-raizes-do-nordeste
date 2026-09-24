@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama de sequência do pedido e do pagamento</title>
+  <desc id="desc">Fluxo com reserva de estoque, chamada ao pagamento simulado, ramificações aprovado/recusado e avanço de status pelos perfis.</desc>
+  <defs>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#18324f}.title{font-size:31px;font-weight:700}.sub{font-size:16px;fill:#526a82}.participant{fill:#e7f0f8;stroke:#355f87;stroke-width:2;rx:10}.pname{font-size:17px;font-weight:700;text-anchor:middle}.life{stroke:#8ca0b3;stroke-width:2;stroke-dasharray:8 7}.msg{stroke:#355f87;stroke-width:2;fill:none;marker-end:url(#arrow)}.reply{stroke:#68839d;stroke-width:2;stroke-dasharray:7 5;fill:none;marker-end:url(#arrow2)}.label{font-size:14px}.number{fill:#244d75}.numbertext{font-size:13px;font-weight:700;fill:#fff;text-anchor:middle}.frame{fill:#fff;stroke:#526f8b;stroke-width:2}.approved{fill:#eaf5ee;stroke:#74a486;stroke-width:1.5}.refused{fill:#fff4e8;stroke:#c28a4b;stroke-width:1.5}.branchTitle{font-size:15px;font-weight:700}.note{font-size:13px;fill:#50677e}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3Z" fill="#355f87"/></marker>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3Z" fill="#68839d"/></marker>
+  </defs>
+  <rect width="1600" height="1200" fill="#fff"/>
+  <text class="title" x="48" y="50">Sequência do fluxo crítico</text>
+  <text class="sub" x="48" y="80">Pedido multicanal - reserva de estoque - pagamento mock - preparo e entrega</text>
+
+  <g>
+    <rect class="participant" x="70" y="112" width="190" height="60"/><text class="pname" x="165" y="149">Cliente</text>
+    <rect class="participant" x="345" y="112" width="250" height="60"/><text class="pname" x="470" y="149">API / Aplicação</text>
+    <rect class="participant" x="680" y="112" width="200" height="60"/><text class="pname" x="780" y="149">SQLite</text>
+    <rect class="participant" x="965" y="112" width="220" height="60"/><text class="pname" x="1075" y="149">Pagamento mock</text>
+    <rect class="participant" x="1260" y="112" width="150" height="60"/><text class="pname" x="1335" y="149">Cozinha</text>
+    <rect class="participant" x="1430" y="112" width="150" height="60"/><text class="pname" x="1505" y="149">Atendente</text>
+  </g>
+  <g class="life"><path d="M165 172 V1115 M470 172 V1115 M780 172 V1115 M1075 172 V1115 M1335 172 V1115 M1505 172 V1115"/></g>
+
+  <g>
+    <circle class="number" cx="48" cy="215" r="14"/><text class="numbertext" x="48" y="220">1</text>
+    <path class="msg" d="M165 215 H470"/><text class="label" x="255" y="205">POST /pedidos: unidade, canal e itens</text>
+    <circle class="number" cx="48" cy="275" r="14"/><text class="numbertext" x="48" y="280">2</text>
+    <path class="msg" d="M470 275 H780"/><text class="label" x="550" y="265">validar e reservar saldo atomicamente</text>
+    <circle class="number" cx="48" cy="325" r="14"/><text class="numbertext" x="48" y="330">3</text>
+    <path class="reply" d="M780 325 H470"/><text class="label" x="550" y="315">gravar pedido, itens e auditoria</text>
+    <circle class="number" cx="48" cy="375" r="14"/><text class="numbertext" x="48" y="380">4</text>
+    <path class="reply" d="M470 375 H165"/><text class="label" x="255" y="365">201 - AGUARDANDO_PAGAMENTO</text>
+    <circle class="number" cx="48" cy="435" r="14"/><text class="numbertext" x="48" y="440">5</text>
+    <path class="msg" d="M165 435 H470"/><text class="label" x="250" y="425">POST /pedidos/{id}/pagamento-mock</text>
+    <circle class="number" cx="48" cy="485" r="14"/><text class="numbertext" x="48" y="490">6</text>
+    <path class="msg" d="M470 485 H1075"/><text class="label" x="675" y="475">enviar resultado APROVADO ou RECUSADO</text>
+    <circle class="number" cx="48" cy="535" r="14"/><text class="numbertext" x="48" y="540">7</text>
+    <path class="reply" d="M1075 535 H470"/><text class="label" x="675" y="525">devolver referência e payload simulado</text>
+  </g>
+
+  <rect class="frame" x="330" y="565" width="880" height="245" rx="8"/>
+  <rect x="330" y="565" width="880" height="34" fill="#e7edf4" stroke="#526f8b" stroke-width="1.5"/>
+  <text class="branchTitle" x="345" y="588">alt - resultado do pagamento</text>
+  <rect class="approved" x="345" y="614" width="850" height="82" rx="6"/>
+  <text class="branchTitle" x="360" y="637" fill="#315f43">APROVADO</text>
+  <path class="msg" d="M470 658 H780"/><text class="label" x="540" y="650">gravar pagamento e EM_PREPARACAO</text>
+  <text class="note" x="490" y="682">Se houver consentimento ativo, registrar os pontos ganhos.</text>
+  <path d="M345 704 H1195" stroke="#b6c4d1" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text class="note" x="360" y="708">else</text>
+  <rect class="refused" x="345" y="712" width="850" height="82" rx="6"/>
+  <text class="branchTitle" x="360" y="735" fill="#875821">RECUSADO</text>
+  <path class="msg" d="M470 756 H780"/><text class="label" x="540" y="748">cancelar pedido e restaurar estoque</text>
+  <text class="note" x="490" y="780">Estornar pontos resgatados, se existirem.</text>
+
+  <circle class="number" cx="48" cy="850" r="14"/><text class="numbertext" x="48" y="855">8</text>
+  <path class="reply" d="M470 850 H165"/><text class="label" x="250" y="840">200 - retornar novo estado e pagamento</text>
+  <circle class="number" cx="48" cy="920" r="14"/><text class="numbertext" x="48" y="925">9</text>
+  <path class="msg" d="M1335 920 H470"/><text class="label" x="735" y="910">PATCH status=PRONTO; validar perfil COZINHA</text>
+  <circle class="number" cx="48" cy="970" r="14"/><text class="numbertext" x="48" y="975">10</text>
+  <path class="msg" d="M470 970 H780"/><text class="label" x="555" y="960">persistir status e evento de auditoria</text>
+  <circle class="number" cx="48" cy="1040" r="14"/><text class="numbertext" x="48" y="1045">11</text>
+  <path class="msg" d="M1505 1040 H470"/><text class="label" x="735" y="1030">PATCH status=ENTREGUE; validar perfil ATENDENTE</text>
+  <text class="note" x="70" y="1145">O mock não coleta dados de cartão. A reserva, o pagamento, a mudança de status e a auditoria ficam persistidos.</text>
+</svg>
