@@ -17,6 +17,5 @@
     { "key": "orderId", "value": "", "enabled": true },
     { "key": "redeemOrderId", "value": "", "enabled": true }
   ],
-  "_postman_variable_scope": "environment",
-  "_postman_exported_using": "Codex"
+  "_postman_variable_scope": "environment"
 }
