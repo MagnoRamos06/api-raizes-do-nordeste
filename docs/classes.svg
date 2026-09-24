@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1430" viewBox="0 0 1100 1430" role="img"><title>Classes e associações — Raízes do Nordeste</title><rect width="1100" height="1430" fill="white"/>
+<text x="30" y="45" font-family="Arial" font-size="28" font-weight="700" text-anchor="start" fill="#18324f">Classes e associações — Raízes do Nordeste</text>
+<text x="30" y="78" font-family="Arial" font-size="18" font-weight="400" text-anchor="start" fill="#18324f">Modelos implementados • atributos públicos principais • multiplicidades UML</text>
+<text x="30" y="124" font-family="Arial" font-size="21" font-weight="700" text-anchor="start" fill="#18324f">01  Pedidos e pagamento</text>
+<path d="M330 238 H390" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="341" y="228" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="358" y="258" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M750 238 H690" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="723" y="228" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="691" y="258" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M540 335 V430" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="550" y="355" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="550" y="418" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1..*</text>
+<path d="M540 330 L534 341 L540 352 L546 341 Z" fill="#365c80"/>
+<path d="M390 512 H330" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="339" y="502" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="350" y="533" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M660 330 V377 H900 V430" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="670" y="352" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="908" y="418" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<rect x="30" y="160" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M30 202 H330" stroke="#365c80" stroke-width="1.5"/>
+<text x="180.0" y="188" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Usuario</text>
+<text x="42" y="228" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ id: int</text>
+<text x="42" y="253" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ nome, email: str</text>
+<text x="42" y="278" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ senha_hash: str</text>
+<text x="42" y="303" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ perfil: PerfilUsuario</text>
+<rect x="390" y="160" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M390 202 H690" stroke="#365c80" stroke-width="1.5"/>
+<text x="540.0" y="188" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Pedido</text>
+<text x="402" y="228" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ id, usuario_id, unidade_id: int</text>
+<text x="402" y="253" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ canal_pedido: CanalPedido</text>
+<text x="402" y="278" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ status: StatusPedido</text>
+<text x="402" y="303" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ total, desconto: Decimal</text>
+<rect x="750" y="160" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M750 202 H1050" stroke="#365c80" stroke-width="1.5"/>
+<text x="900.0" y="188" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Unidade</text>
+<text x="762" y="228" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ id: int</text>
+<text x="762" y="253" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ nome, endereco: str</text>
+<text x="762" y="278" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ ativa: bool</text>
+<rect x="30" y="430" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M30 472 H330" stroke="#365c80" stroke-width="1.5"/>
+<text x="180.0" y="458" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Produto</text>
+<text x="42" y="498" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ id: int</text>
+<text x="42" y="523" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ nome, descricao: str</text>
+<text x="42" y="548" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ preco: Decimal</text>
+<text x="42" y="573" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ ativo: bool</text>
+<rect x="390" y="430" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M390 472 H690" stroke="#365c80" stroke-width="1.5"/>
+<text x="540.0" y="458" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">ItemPedido</text>
+<text x="402" y="498" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ id, pedido_id, produto_id: int</text>
+<text x="402" y="523" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ quantidade: int</text>
+<text x="402" y="548" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ preco_unitario: Decimal</text>
+<rect x="750" y="430" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M750 472 H1050" stroke="#365c80" stroke-width="1.5"/>
+<text x="900.0" y="458" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Pagamento</text>
+<text x="762" y="498" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ id, pedido_id: int</text>
+<text x="762" y="523" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ status: StatusPagamento</text>
+<text x="762" y="548" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ valor: Decimal</text>
+<text x="762" y="573" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ payload_resposta: dict</text>
+<text x="30" y="635" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">Composição: o item pertence ao pedido. O preço unitário é preservado no momento da compra.</text>
+<text x="30" y="663" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">Pagamento: o banco admite vários registros; o fluxo sequencial bloqueia nova tentativa após processar.</text>
+<text x="30" y="716" font-family="Arial" font-size="21" font-weight="700" text-anchor="start" fill="#18324f">02  Estoque por unidade</text>
+<path d="M330 810 H390" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="341" y="800" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="357" y="832" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M750 810 H690" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="724" y="800" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="692" y="832" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<rect x="30" y="750" width="300" height="145" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M30 792 H330" stroke="#365c80" stroke-width="1.5"/>
+<text x="180.0" y="778" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Produto «referência»</text>
+<text x="42" y="818" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">Mesma classe do núcleo</text>
+<rect x="390" y="750" width="300" height="145" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M390 792 H690" stroke="#365c80" stroke-width="1.5"/>
+<text x="540.0" y="778" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Estoque</text>
+<text x="402" y="818" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ unidade_id, produto_id: int</text>
+<text x="402" y="843" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ quantidade: int</text>
+<text x="402" y="868" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">{único: unidade e produto}</text>
+<rect x="750" y="750" width="300" height="145" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M750 792 H1050" stroke="#365c80" stroke-width="1.5"/>
+<text x="900.0" y="778" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Unidade «referência»</text>
+<text x="762" y="818" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">Mesma classe do núcleo</text>
+<text x="30" y="955" font-family="Arial" font-size="21" font-weight="700" text-anchor="start" fill="#18324f">03  Auditoria e fidelidade</text>
+<rect x="30" y="980" width="660" height="50" rx="8" fill="#e7f0f8" stroke="#365c80" stroke-width="2"/>
+<text x="360" y="1012" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Usuario «referência»</text>
+<rect x="750" y="980" width="300" height="50" rx="8" fill="#e7f0f8" stroke="#365c80" stroke-width="2"/>
+<text x="900" y="1012" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Pedido «referência»</text>
+<path d="M180 1030 V1100" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="190" y="1050" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="190" y="1090" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M540 1030 V1100" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="550" y="1050" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="550" y="1090" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M670 1030 V1050 H790 V1100" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="680" y="1045" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">1</text>
+<text x="796" y="1090" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<path d="M970 1030 V1100" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="978" y="1052" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..1</text>
+<text x="978" y="1090" font-family="Arial" font-size="16" font-weight="700" text-anchor="start" fill="#18324f">0..*</text>
+<rect x="30" y="1100" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M30 1142 H330" stroke="#365c80" stroke-width="1.5"/>
+<text x="180.0" y="1128" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">Auditoria</text>
+<text x="42" y="1168" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ usuario_id: int</text>
+<text x="42" y="1193" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ acao, entidade, entidade_id: str</text>
+<text x="42" y="1218" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ detalhes: str</text>
+<text x="42" y="1243" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ criado_em: datetime</text>
+<rect x="390" y="1100" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M390 1142 H690" stroke="#365c80" stroke-width="1.5"/>
+<text x="540.0" y="1128" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">ConsentimentoFidelidade</text>
+<text x="402" y="1168" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ usuario_id: int</text>
+<text x="402" y="1193" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ consentido: bool</text>
+<text x="402" y="1218" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ registrado_em: datetime</text>
+<rect x="750" y="1100" width="300" height="170" rx="8" fill="#ffffff" stroke="#365c80" stroke-width="2"/>
+<path d="M750 1142 H1050" stroke="#365c80" stroke-width="1.5"/>
+<text x="900.0" y="1128" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#18324f">MovimentoFidelidade</text>
+<text x="762" y="1168" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ usuario_id, pedido_id?: int</text>
+<text x="762" y="1193" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ tipo: TipoMovimentoFidelidade</text>
+<text x="762" y="1218" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ pontos: int</text>
+<text x="762" y="1243" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">+ criado_em: datetime</text>
+<text x="30" y="1310" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">As referências repetem classes para evitar cruzamentos. Cada classe persistida possui id: int.</text>
+<text x="30" y="1340" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">Pedido.desconto representa desconto_fidelidade. Movimentos são únicos por pedido e tipo.</text>
+<text x="30" y="1370" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">As regras são funções da camada de aplicação; os modelos SQLModel não declaram métodos de negócio.</text>
+</svg>

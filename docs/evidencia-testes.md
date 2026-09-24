@@ -3,11 +3,13 @@
 **Data:** 24/09/2026
 **Base:** banco SQLite isolado e vazio, preparado com a migração Alembic e o seed do projeto.
 **Execução:** coleção Postman `raizes-api.postman_collection.json` via Newman, contra a API local.
+**Revalidação final:** realizada em 24/09/2026, após aplicar novamente a migração e o seed em um banco de validação limpo.
 
 ## Resultado
 
 - 31 requisições executadas.
 - 31 scripts de teste executados.
+- 31 asserções aprovadas.
 - 0 falhas.
 - Migração Alembic e seed concluídos antes do início da API.
 - Verificação manual adicional: `/health`, `/docs` e `/openapi.json` responderam HTTP 200.

@@ -1,56 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-  <title id="title">Diagrama UML de casos de uso - API Raízes do Nordeste</title>
-  <desc id="desc">Atores cliente, equipe de operação, gerente e administrador vinculados aos casos de uso da API.</desc>
-  <defs>
-    <style>
-      text{font-family:Arial,Helvetica,sans-serif;fill:#18324f}.title{font-size:30px;font-weight:700}.subtitle{font-size:16px;fill:#51677f}.boundary{fill:#f6f9fc;stroke:#315b87;stroke-width:2.5}.group{fill:#e9f2fb;stroke:#bfd2e5;stroke-width:1.5}.groupname{font-size:17px;font-weight:700;fill:#244d75}.uc{fill:#fff;stroke:#4d7398;stroke-width:2}.uclabel{font-size:15px;text-anchor:middle}.assoc{fill:none;stroke:#71869a;stroke-width:1.6}.actor{stroke:#244d75;stroke-width:4;fill:none;stroke-linecap:round}.actorlabel{font-size:17px;font-weight:700;text-anchor:middle}.hint{font-size:13px;fill:#51677f}
-    </style>
-  </defs>
-  <rect width="1600" height="1000" fill="#fff"/>
-  <text class="title" x="48" y="48">Casos de uso - API Raízes do Nordeste</text>
-  <text class="subtitle" x="48" y="77">Atores e permissões refletem as rotas e regras implementadas no MVP</text>
-  <rect class="boundary" x="300" y="110" width="1000" height="820" rx="16"/>
-  <text x="330" y="145" font-size="18" font-weight="700">Sistema Back-End</text>
-
-  <!-- Association lines are drawn behind use cases. -->
-  <g class="assoc">
-    <path d="M185 420 L385 220"/><path d="M185 435 L385 330"/><path d="M185 450 L385 440"/><path d="M185 465 L385 550"/><path d="M185 480 L385 660"/>
-    <path d="M185 770 H250 V360 H690"/><path d="M185 770 H250 V500 H690"/><path d="M185 770 H250 V640 H690"/>
-    <path d="M1415 300 H1360 V235 H1210"/><path d="M1415 315 H1375 V375 H1210"/><path d="M1415 330 H1360 V515 H1210"/>
-    <path d="M1415 700 H1385 V655 H1210"/><path d="M1415 715 H1360 V790 H1210"/>
-    <path d="M1413 670 H1345 V235 H1235"/><path d="M1413 675 H1355 V375 H1235"/><path d="M1413 680 H1365 V515 H1235"/>
-  </g>
-
-  <!-- Actors outside the system boundary. -->
-  <g class="actor"><circle cx="145" cy="365" r="23"/><path d="M145 388 V468 M103 418 H187 M145 468 L108 520 M145 468 L182 520"/></g>
-  <text class="actorlabel" x="145" y="550">Cliente</text>
-  <g class="actor"><circle cx="145" cy="690" r="23"/><path d="M145 713 V793 M103 743 H187 M145 793 L108 845 M145 793 L182 845"/></g>
-  <text class="actorlabel" x="145" y="875">Equipe operacional</text>
-  <g class="actor"><circle cx="1455" cy="235" r="23"/><path d="M1455 258 V338 M1413 288 H1497 M1455 338 L1418 390 M1455 338 L1492 390"/></g>
-  <text class="actorlabel" x="1455" y="420">Gerente</text>
-  <g class="actor"><circle cx="1455" cy="635" r="23"/><path d="M1455 658 V738 M1413 688 H1497 M1455 738 L1418 790 M1455 738 L1492 790"/></g>
-  <text class="actorlabel" x="1455" y="820">ADMIN</text>
-
-  <!-- Capability groups inside the system. -->
-  <rect class="group" x="330" y="170" width="300" height="610" rx="12"/><text class="groupname" x="352" y="200">Cliente</text>
-  <rect class="group" x="650" y="270" width="300" height="450" rx="12"/><text class="groupname" x="672" y="300">Operação</text>
-  <rect class="group" x="970" y="170" width="300" height="400" rx="12"/><text class="groupname" x="992" y="200">Gestão</text>
-  <rect class="group" x="970" y="600" width="300" height="250" rx="12"/><text class="groupname" x="992" y="630">Administração</text>
-
-  <!-- Use cases. -->
-  <g><ellipse class="uc" cx="480" cy="250" rx="115" ry="33"/><text class="uclabel" x="480" y="255">Cadastrar-se e autenticar-se</text>
-    <ellipse class="uc" cx="480" cy="360" rx="115" ry="33"/><text class="uclabel" x="480" y="365">Criar pedido multicanal</text>
-    <ellipse class="uc" cx="480" cy="470" rx="115" ry="33"/><text class="uclabel" x="480" y="475">Pagar pedido (mock)</text>
-    <ellipse class="uc" cx="480" cy="580" rx="115" ry="33"/><text class="uclabel" x="480" y="585">Consultar próprios pedidos</text>
-    <ellipse class="uc" cx="480" cy="690" rx="115" ry="33"/><text class="uclabel" x="480" y="695">Gerir consentimento e pontos</text></g>
-  <g><ellipse class="uc" cx="800" cy="380" rx="115" ry="33"/><text class="uclabel" x="800" y="385">Consultar pedidos e estoque</text>
-    <ellipse class="uc" cx="800" cy="520" rx="115" ry="33"/><text class="uclabel" x="800" y="525">Marcar pedido como pronto</text>
-    <ellipse class="uc" cx="800" cy="660" rx="115" ry="33"/><text class="uclabel" x="800" y="665">Marcar pedido como entregue</text></g>
-  <g><ellipse class="uc" cx="1120" cy="250" rx="115" ry="33"/><text class="uclabel" x="1120" y="255">Gerir unidades e produtos</text>
-    <ellipse class="uc" cx="1120" cy="390" rx="115" ry="33"/><text class="uclabel" x="1120" y="395">Movimentar estoque</text>
-    <ellipse class="uc" cx="1120" cy="530" rx="115" ry="33"/><text class="uclabel" x="1120" y="535">Avançar status de pedidos</text>
-    <ellipse class="uc" cx="1120" cy="690" rx="115" ry="33"/><text class="uclabel" x="1120" y="695">Provisionar equipe operacional</text>
-    <ellipse class="uc" cx="1120" cy="800" rx="115" ry="33"/><text class="uclabel" x="1120" y="805">Consultar auditoria</text></g>
-
-  <text class="hint" x="330" y="900">A operação depende do papel: COZINHA conclui preparo; ATENDENTE conclui entrega; GERENTE e ADMIN têm permissões gerenciais.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1350" height="1170" viewBox="0 0 1350 1170" role="img"><title>Casos de uso — Raízes do Nordeste</title><rect width="1350" height="1170" fill="white"/>
+<text x="30" y="45" font-family="Arial" font-size="28" font-weight="700" text-anchor="start" fill="#18324f">Casos de uso — Raízes do Nordeste</text>
+<text x="30" y="80" font-family="Arial" font-size="19" font-weight="400" text-anchor="start" fill="#18324f">Perfis de acesso e participante de pagamento simulado</text>
+<rect x="250" y="110" width="890" height="975" rx="8" fill="#f4f8fc" stroke="#365c80" stroke-width="2"/>
+<text x="275" y="140" font-family="Arial" font-size="20" font-weight="700" text-anchor="start" fill="#18324f">API Raízes do Nordeste</text>
+<circle cx="110" cy="184" r="14" fill="white" stroke="#365c80" stroke-width="3"/>
+<path d="M110 198 V246 M83 220 H137 M110 246 L86 281 M110 246 L134 281" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="110" y="308" font-family="Arial" font-size="19" font-weight="700" text-anchor="middle" fill="#18324f">Cliente</text>
+<path d="M137 220 H225 V167 H980" fill="none" stroke="#607d93" stroke-width="2"/>
+<path d="M420 167 V182" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="420" cy="220" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="420" y="226" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Cadastrar-se e autenticar</text>
+<path d="M700 167 V182" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="700" cy="220" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="700" y="213" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Criar e consultar</text>
+<text x="700" y="233" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">os próprios pedidos</text>
+<path d="M980 167 V182" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="980" cy="220" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="980" y="213" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consentimento,</text>
+<text x="980" y="233" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">pontos e resgates</text>
+<path d="M137 220 H225 V320 H572" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="700" cy="320" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="700" y="326" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Pagar pedido (mock)</text>
+<circle cx="1240" cy="284" r="14" fill="white" stroke="#365c80" stroke-width="3"/>
+<path d="M1240 298 V346 M1213 320 H1267 M1240 346 L1216 381 M1240 346 L1264 381" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="1240" y="408" font-family="Arial" font-size="19" font-weight="700" text-anchor="middle" fill="#18324f">Pagamento simulado</text>
+<path d="M1213 320 H828" fill="none" stroke="#607d93" stroke-width="2"/>
+<circle cx="110" cy="434" r="14" fill="white" stroke="#365c80" stroke-width="3"/>
+<path d="M110 448 V496 M83 470 H137 M110 496 L86 531 M110 496 L134 531" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="110" y="558" font-family="Arial" font-size="19" font-weight="700" text-anchor="middle" fill="#18324f">COZINHA</text>
+<path d="M137 470 H225 V417 H980" fill="none" stroke="#607d93" stroke-width="2"/>
+<path d="M420 417 V432" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="420" cy="470" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="420" y="476" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar pedidos</text>
+<path d="M700 417 V432" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="700" cy="470" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="700" y="476" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar estoque</text>
+<path d="M980 417 V432" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="980" cy="470" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="980" y="476" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Marcar pedido pronto</text>
+<circle cx="110" cy="599" r="14" fill="white" stroke="#365c80" stroke-width="3"/>
+<path d="M110 613 V661 M83 635 H137 M110 661 L86 696 M110 661 L134 696" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="110" y="723" font-family="Arial" font-size="19" font-weight="700" text-anchor="middle" fill="#18324f">ATENDENTE</text>
+<path d="M137 635 H225 V582 H700" fill="none" stroke="#607d93" stroke-width="2"/>
+<path d="M420 582 V597" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="420" cy="635" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="420" y="641" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar pedidos</text>
+<path d="M700 582 V597" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="700" cy="635" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="700" y="641" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Registrar entrega</text>
+<circle cx="110" cy="764" r="14" fill="white" stroke="#365c80" stroke-width="3"/>
+<path d="M110 778 V826 M83 800 H137 M110 826 L86 861 M110 826 L134 861" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="110" y="888" font-family="Arial" font-size="19" font-weight="700" text-anchor="middle" fill="#18324f">GERENTE</text>
+<path d="M137 800 H225 V747 H980" fill="none" stroke="#607d93" stroke-width="2"/>
+<path d="M420 747 V762" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="420" cy="800" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="420" y="793" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Gerir unidades</text>
+<text x="420" y="813" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">e produtos</text>
+<path d="M700 747 V762" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="700" cy="800" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="700" y="793" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar e</text>
+<text x="700" y="813" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">movimentar estoque</text>
+<path d="M980 747 V762" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="980" cy="800" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="980" y="793" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar pedidos e</text>
+<text x="980" y="813" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">avançar status</text>
+<circle cx="110" cy="929" r="14" fill="white" stroke="#365c80" stroke-width="3"/>
+<path d="M110 943 V991 M83 965 H137 M110 991 L86 1026 M110 991 L134 1026" fill="none" stroke="#607d93" stroke-width="2"/>
+<text x="110" y="1053" font-family="Arial" font-size="19" font-weight="700" text-anchor="middle" fill="#18324f">ADMIN</text>
+<path d="M137 965 H225 V912 H980" fill="none" stroke="#607d93" stroke-width="2"/>
+<path d="M420 912 V927" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="420" cy="965" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="420" y="958" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Provisionar equipe</text>
+<text x="420" y="978" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">e gerir catálogo/estoque</text>
+<path d="M700 912 V927" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="700" cy="965" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="700" y="958" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar pedidos,</text>
+<text x="700" y="978" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">pagar e avançar status</text>
+<path d="M980 912 V927" fill="none" stroke="#607d93" stroke-width="2"/>
+<ellipse cx="980" cy="965" rx="128" ry="38" fill="white" stroke="#365c80" stroke-width="2"/>
+<text x="980" y="971" font-family="Arial" font-size="17" font-weight="400" text-anchor="middle" fill="#18324f">Consultar auditoria</text>
+<text x="30" y="1120" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">O ator de pagamento representa a integração conceitual. Nesta versão, o resultado é produzido por um mock interno.</text>
+<text x="30" y="1148" font-family="Arial" font-size="17" font-weight="400" text-anchor="start" fill="#18324f">Cada perfil interno também se autentica. As associações estão agrupadas por ator para facilitar a leitura.</text>
 </svg>
