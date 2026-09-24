@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+data/*.db
+postman/ambiente-local.json
+/RU_Projeto_Back_End.PDF
+/docs/relatorio-tecnico.md
