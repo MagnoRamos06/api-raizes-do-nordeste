@@ -62,7 +62,7 @@ O sistema evita coletar cartão de pagamento e orienta que logs não incluam sen
 
 O repositório contém código, migração inicial, `.env.example`, README, coleção Postman, plano de cenários e diagramas. O README explica instalação, configuração, criação do banco, seed, execução e acesso ao Swagger. A migração cria o esquema de forma versionada; a API não cria tabelas automaticamente na inicialização.
 
-O PDF acadêmico único foi montado com os dados de identificação informados. A migração, o seed e a coleção Postman foram executados localmente; o resumo verificável está na [evidência de testes](evidencia-testes.md). O repositório remoto público continua pendente de publicação.
+O PDF acadêmico único foi montado com os dados de identificação informados. A migração, o seed e a coleção Postman foram executados localmente; o resumo verificável está na [evidência de testes](evidencia-testes.md). O código, a documentação técnica, os diagramas, a migração e a coleção Postman estão publicados no repositório público do projeto.
 
 ## 7 Plano de testes
 
