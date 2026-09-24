@@ -1,0 +1,22 @@
+{
+  "id": "raizes-local-template",
+  "name": "Raízes - ambiente local (preencher credenciais)",
+  "values": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8000", "enabled": true },
+    { "key": "adminEmail", "value": "", "enabled": true },
+    { "key": "adminPassword", "value": "", "enabled": true },
+    { "key": "token", "value": "", "enabled": true },
+    { "key": "clientEmail", "value": "", "enabled": true },
+    { "key": "clientPassword", "value": "Cliente@Teste123", "enabled": true },
+    { "key": "kitchenEmail", "value": "", "enabled": true },
+    { "key": "kitchenPassword", "value": "Cozinha@Teste123", "enabled": true },
+    { "key": "attendantEmail", "value": "", "enabled": true },
+    { "key": "attendantPassword", "value": "Atendente@Teste123", "enabled": true },
+    { "key": "unitId", "value": "", "enabled": true },
+    { "key": "productId", "value": "", "enabled": true },
+    { "key": "orderId", "value": "", "enabled": true },
+    { "key": "redeemOrderId", "value": "", "enabled": true }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_using": "Codex"
+}

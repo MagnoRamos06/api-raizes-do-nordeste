@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "Raízes do Nordeste - API Back-end",
+    "description": "Fluxo local do MVP. Execute após aplicar Alembic e rodar o seed. Informe adminEmail e adminPassword em um ambiente Postman local.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8000", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "adminEmail", "value": "", "type": "string" },
+    { "key": "adminPassword", "value": "", "type": "string" },
+    { "key": "clientPassword", "value": "Cliente@Teste123", "type": "string" },
+    { "key": "kitchenPassword", "value": "Cozinha@Teste123", "type": "string" },
+    { "key": "attendantPassword", "value": "Atendente@Teste123", "type": "string" },
+    { "key": "clientEmail", "value": "", "type": "string" },
+    { "key": "kitchenEmail", "value": "", "type": "string" },
+    { "key": "attendantEmail", "value": "", "type": "string" },
+    { "key": "unitId", "value": "", "type": "string" },
+    { "key": "productId", "value": "", "type": "string" },
+    { "key": "orderId", "value": "", "type": "string" },
+    { "key": "redeemOrderId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "1 - Preparação e autenticação",
+      "item": [
+        {
+          "name": "T01 - Cadastrar cliente com consentimento opcional",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Cliente de Demonstração\",\n  \"email\": \"cliente.{{$guid}}@example.com\",\n  \"senha\": \"{{clientPassword}}\",\n  \"consentimento_fidelidade\": true\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auth/cadastro"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T01 cliente criado (201)', () => pm.response.to.have.status(201));", "pm.environment.set('clientEmail', pm.response.json().email);"] } }]
+        },
+        {
+          "name": "T02 - Login do cliente",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"senha\": \"{{clientPassword}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auth/login"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T02 login válido (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T03 - Listar unidades e guardar ID do seed",
+          "request": { "method": "GET", "url": "{{baseUrl}}/unidades" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T03 unidade de demonstração disponível (200)', () => pm.response.to.have.status(200));", "const units = pm.response.json();", "pm.expect(units.length).to.be.greaterThan(0);", "pm.environment.set('unitId', units[0].id);"] } }]
+        },
+        {
+          "name": "T04 - Cardápio da unidade",
+          "request": { "method": "GET", "url": "{{baseUrl}}/unidades/{{unitId}}/cardapio" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T04 cardápio consultado (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json()).to.be.an('array');"] } }]
+        },
+        {
+          "name": "T05 - Rota protegida sem token",
+          "request": { "method": "GET", "auth": { "type": "noauth" }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T05 sem token retorna 401', () => pm.response.to.have.status(401));", "pm.expect(pm.response.json().error).to.eql('UNAUTHENTICATED');"] } }]
+        },
+        {
+          "name": "T06 - Login do administrador do seed",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"senha\": \"{{adminPassword}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auth/login"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T06 login admin válido (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T07 - Criar usuário de cozinha",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Cozinha Demonstração\",\n  \"email\": \"cozinha.{{$guid}}@example.com\",\n  \"senha\": \"{{kitchenPassword}}\",\n  \"perfil\": \"COZINHA\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auth/usuarios-operacionais"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T07 perfil COZINHA criado (201)', () => pm.response.to.have.status(201));", "pm.environment.set('kitchenEmail', pm.response.json().email);"] } }]
+        },
+        {
+          "name": "T08 - Criar usuário de atendimento",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Atendente Demonstração\",\n  \"email\": \"atendente.{{$guid}}@example.com\",\n  \"senha\": \"{{attendantPassword}}\",\n  \"perfil\": \"ATENDENTE\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/auth/usuarios-operacionais"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T08 perfil ATENDENTE criado (201)', () => pm.response.to.have.status(201));", "pm.environment.set('attendantEmail', pm.response.json().email);"] } }]
+        },
+        {
+          "name": "T09 - Criar produto de teste para fluxo e pontos",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Combo de Demonstração\",\n  \"descricao\": \"Produto da coleção Postman\",\n  \"preco\": 100.00\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/produtos"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T09 produto criado (201)', () => pm.response.to.have.status(201));", "pm.environment.set('productId', pm.response.json().id);"] } }]
+        },
+        {
+          "name": "T10 - Entrada inicial de estoque",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"quantidade\": 20\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/unidades/{{unitId}}/estoque/{{productId}}/movimentacoes"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T10 estoque inicial registrado (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().quantidade).to.eql(20);"] } }]
+        }
+      ]
+    },
+    {
+      "name": "2 - Pedidos, pagamentos e fidelidade",
+      "item": [
+        {
+          "name": "T11 - Login do cliente antes do fluxo",
+          "request": { "method": "POST", "auth": { "type": "noauth" }, "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"senha\": \"{{clientPassword}}\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T11 login cliente (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T12 - Canal obrigatório ausente",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"unidadeId\": {{unitId}},\n  \"itens\": [{\"produtoId\": {{productId}}, \"quantidade\": 1}]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T12 canalPedido ausente retorna 422', () => pm.response.to.have.status(422));", "pm.expect(pm.response.json().error).to.eql('VALIDATION_ERROR');"] } }]
+        },
+        {
+          "name": "T13 - Produto inexistente",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"unidadeId\": {{unitId}},\n  \"canalPedido\": \"APP\",\n  \"itens\": [{\"produtoId\": 999999999, \"quantidade\": 1}]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T13 produto inexistente retorna 404', () => pm.response.to.have.status(404));"] } }]
+        },
+        {
+          "name": "T14 - Estoque insuficiente",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"unidadeId\": {{unitId}},\n  \"canalPedido\": \"TOTEM\",\n  \"itens\": [{\"produtoId\": {{productId}}, \"quantidade\": 1000}]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T14 saldo insuficiente retorna 409', () => pm.response.to.have.status(409));"] } }]
+        },
+        {
+          "name": "T14B - Quantidade negativa",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"unidadeId\": {{unitId}},\n  \"canalPedido\": \"TOTEM\",\n  \"itens\": [{\"produtoId\": {{productId}}, \"quantidade\": -1}]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T14B quantidade negativa retorna 422', () => pm.response.to.have.status(422));", "pm.expect(pm.response.json().error).to.eql('VALIDATION_ERROR');"] } }]
+        },
+        {
+          "name": "T15 - Criar pedido válido",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"unidadeId\": {{unitId}},\n  \"canalPedido\": \"TOTEM\",\n  \"itens\": [{\"produtoId\": {{productId}}, \"quantidade\": 1}]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T15 pedido criado (201)', () => pm.response.to.have.status(201));", "pm.expect(pm.response.json().canalPedido).to.eql('TOTEM');", "pm.environment.set('orderId', pm.response.json().id);"] } }]
+        },
+        {
+          "name": "T15B - Filtrar pedidos por canalPedido",
+          "request": { "method": "GET", "url": "{{baseUrl}}/pedidos?canalPedido=TOTEM&page=1&limit=10" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T15B filtro do canal retorna pedido TOTEM (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().some(order => order.canalPedido === 'TOTEM')).to.eql(true);"] } }]
+        },
+        {
+          "name": "T16 - Aprovar pagamento mock",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"resultado\": \"APROVADO\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos/{{orderId}}/pagamento-mock" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T16 pagamento aprovado e pedido em preparação (200)', () => pm.response.to.have.status(200));", "const body = pm.response.json();", "pm.expect(body.status).to.eql('EM_PREPARACAO');", "pm.expect(body.pagamento.payload.gateway).to.eql('MOCK');"] } }]
+        },
+        {
+          "name": "T17 - Cliente não pode avançar status",
+          "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"PRONTO\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos/{{orderId}}/status" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T17 cliente sem permissão recebe 403', () => pm.response.to.have.status(403));"] } }]
+        },
+        {
+          "name": "T18 - Pagamento repetido é bloqueado",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"resultado\": \"APROVADO\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos/{{orderId}}/pagamento-mock" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T18 pagamento repetido recebe 409', () => pm.response.to.have.status(409));"] } }]
+        },
+        {
+          "name": "T19 - Login da cozinha",
+          "request": { "method": "POST", "auth": { "type": "noauth" }, "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{kitchenEmail}}\",\n  \"senha\": \"{{kitchenPassword}}\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T19 login cozinha (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T20 - Cozinha marca pedido pronto",
+          "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"PRONTO\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos/{{orderId}}/status" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T20 cozinha atualiza status (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().status).to.eql('PRONTO');"] } }]
+        },
+        {
+          "name": "T21 - Login do atendente",
+          "request": { "method": "POST", "auth": { "type": "noauth" }, "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{attendantEmail}}\",\n  \"senha\": \"{{attendantPassword}}\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T21 login atendente (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T22 - Atendente entrega pedido",
+          "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"ENTREGUE\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos/{{orderId}}/status" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T22 pedido entregue (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().status).to.eql('ENTREGUE');"] } }]
+        },
+        {
+          "name": "T23 - Login do cliente para segundo pedido",
+          "request": { "method": "POST", "auth": { "type": "noauth" }, "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"senha\": \"{{clientPassword}}\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T23 login cliente (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T24 - Criar pedido para resgatar pontos",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"unidadeId\": {{unitId}},\n  \"canalPedido\": \"APP\",\n  \"itens\": [{\"produtoId\": {{productId}}, \"quantidade\": 1}]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T24 segundo pedido criado (201)', () => pm.response.to.have.status(201));", "pm.environment.set('redeemOrderId', pm.response.json().id);"] } }]
+        },
+        {
+          "name": "T25 - Resgatar 100 pontos",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"pedidoId\": {{redeemOrderId}},\n  \"pontos\": 100\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/fidelidade/resgates" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T25 desconto de R$ 5,00 aplicado (200)', () => pm.response.to.have.status(200));", "pm.expect(Number(pm.response.json().desconto)).to.eql(5);", "pm.expect(Number(pm.response.json().totalAtualizado)).to.eql(95);"] } }]
+        },
+        {
+          "name": "T26 - Recusar pagamento e estornar pontos",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"resultado\": \"RECUSADO\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pedidos/{{redeemOrderId}}/pagamento-mock" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T26 pagamento recusado cancela pedido (200)', () => pm.response.to.have.status(200));", "const body = pm.response.json();", "pm.expect(body.status).to.eql('CANCELADO');", "pm.expect(body.pagamento.status).to.eql('RECUSADO');"] } }]
+        },
+        {
+          "name": "T27 - Conferir estorno no saldo de fidelidade",
+          "request": { "method": "GET", "url": "{{baseUrl}}/fidelidade/me" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T27 pontos resgatados foram estornados (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().pontos).to.eql(100);"] } }]
+        }
+      ]
+    },
+    {
+      "name": "3 - Auditoria",
+      "item": [
+        {
+          "name": "T28 - Login administrativo para consultar auditoria",
+          "request": { "method": "POST", "auth": { "type": "noauth" }, "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"senha\": \"{{adminPassword}}\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/auth/login" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T28 login admin (200)', () => pm.response.to.have.status(200));", "pm.environment.set('token', pm.response.json().access_token);"] } }]
+        },
+        {
+          "name": "T29 - Evidenciar criação de pedido na auditoria",
+          "request": { "method": "GET", "url": "{{baseUrl}}/auditoria?entidade=PEDIDO&entidade_id={{orderId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('T29 auditoria disponível para ADMIN (200)', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().some(item => item.acao === 'PEDIDO_CRIADO')).to.eql(true);"] } }]
+        }
+      ]
+    }
+  ]
+}
