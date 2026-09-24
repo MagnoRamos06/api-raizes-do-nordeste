@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ApplicationError(Exception):
-    status_code: in
+    status_code: int
     code: str
     message: str
 
