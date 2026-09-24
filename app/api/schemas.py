@@ -1,0 +1,61 @@
+"""Compatibilidade de importação para os contratos expostos pela API.
+
+Os modelos ficam em ``app.application.contracts`` para que a camada de
+aplicação não dependa do pacote HTTP.
+"""
+
+from app.application.contracts import (
+    AuditoriaResposta,
+    AtualizarConsentimento,
+    AtualizarStatusPedido,
+    CadastroOperador,
+    CadastroUsuario,
+    CriarPedido,
+    CriarProduto,
+    CriarUnidade,
+    EstoqueResposta,
+    FidelidadeResumo,
+    ItemCardapio,
+    ItemPedidoEntrada,
+    ItemPedidoResposta,
+    LoginUsuario,
+    MovimentoEstoqueEntrada,
+    MovimentoFidelidadeResposta,
+    PagamentoResposta,
+    PedidoResposta,
+    ProdutoResposta,
+    ResgateResposta,
+    ResgatarPontos,
+    ResultadoPagamento,
+    TokenResposta,
+    UnidadeResposta,
+    UsuarioPublico,
+)
+
+__all__ = [
+    "AuditoriaResposta",
+    "AtualizarConsentimento",
+    "AtualizarStatusPedido",
+    "CadastroOperador",
+    "CadastroUsuario",
+    "CriarPedido",
+    "CriarProduto",
+    "CriarUnidade",
+    "EstoqueResposta",
+    "FidelidadeResumo",
+    "ItemCardapio",
+    "ItemPedidoEntrada",
+    "ItemPedidoResposta",
+    "LoginUsuario",
+    "MovimentoEstoqueEntrada",
+    "MovimentoFidelidadeResposta",
+    "PagamentoResposta",
+    "PedidoResposta",
+    "ProdutoResposta",
+    "ResgateResposta",
+    "ResgatarPontos",
+    "ResultadoPagamento",
+    "TokenResposta",
+    "UnidadeResposta",
+    "UsuarioPublico",
+]
