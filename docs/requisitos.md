@@ -42,6 +42,12 @@ A rede Raízes do Nordeste atende por canais digitais e presenciais e opera mais
 | RNF06 | Privacidade proporcional ao escopo. | Minimização de dados, fidelidade opcional, auditoria sem credenciais e estratégia de retenção documentada. |
 | RNF07 | Correção reproduzível. | README, Swagger/OpenAPI, DER, plano e coleção de cenários Postman. |
 
+## Desempenho, disponibilidade e falhas de integração
+
+- RNF08 — Desempenho em horários de pico: listagens principais usam paginação e os campos de consulta têm índices. Testes de carga e dimensionamento de capacidade permanecem como evolução; a execução local não comprova desempenho em produção.
+- RNF09 — Disponibilidade: a rota /health permite verificar a aplicação. Supervisão de processo, cópias de segurança e restauração do banco são medidas propostas para uma futura implantação. O MVP não estabelece acordo de nível de serviço.
+- RNF10 — Falhas de pagamento: o mock permite aprovação e recusa, preservando transação, estoque e fidelidade. Uma integração real exigirá tempo limite, tratamento de indisponibilidade, reconciliação e identificador de idempotência. Não há chamadas a um provedor externo nesta versão.
+
 ## Recorte do MVP e justificativas
 
 O caminho P0 é **pedido → reserva de estoque → pagamento mock → preparação → entrega**. Ele percorre autenticação, regras de negócio, persistência, multicanalidade e autorização de ponta a ponta. Fidelidade foi incluída como requisito P1 por sua relevância ao cenário, com participação voluntária para reduzir coleta desnecessária. A integração de pagamento é deliberadamente um mock: permite demonstrar sucesso e recusa sem armazenar dados de cartão nem depender de serviço externo.

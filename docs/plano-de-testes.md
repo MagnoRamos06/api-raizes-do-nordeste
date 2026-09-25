@@ -43,4 +43,13 @@ O primeiro usuário cliente consente com fidelidade, compra de demonstração de
 | T27 | Consultar saldo — `GET /fidelidade/me` | Cliente autenticado | 200 e saldo restaurado a 100 pontos | T27 - Conferir estorno no saldo de fidelidade |
 | T29 | Evidência de auditoria — `GET /auditoria` | Token ADMIN; filtro pelo pedido T15 | 200 e evento PEDIDO_CRIADO | T29 - Evidenciar criação de pedido na auditoria |
 
-O conjunto contém mais que os 10 cenários mínimos e cobre casos positivos e negativos, autenticação, autorização, validação, estoque, pagamento recusado, canal do pedido e auditoria. A execução local da coleção foi confirmada em 24/09/2026: 31 chamadas, 31 scripts de teste e nenhuma falha. O resumo está em [evidência de testes](evidencia-testes.md).
+O conjunto contém mais que os 10 cenários mínimos e cobre casos positivos e negativos, autenticação, autorização, validação, estoque, pagamento recusado, canal do pedido e auditoria. A execução local da coleção foi confirmada em 25/09/2026: 35 chamadas, 35 scripts de teste e nenhuma falha. O resumo está em [evidência de testes](evidencia-testes.md).
+
+## Regressão de validações e documentação
+
+| ID | Cenário / endpoint | Pré-condição e entrada | Resultado esperado | Evidência na coleção |
+|---|---|---|---|---|
+| T30 | Nome curto — POST /produtos | ADMIN autenticado; nome " a ", preço 10 | 422; mensagem em português; mínimo dois caracteres após normalização | T30 - Rejeitar nome curto após remover espaços |
+| T31 | Endereço curto — POST /unidades | ADMIN autenticado; nome válido e endereço " a   " | 422; mínimo cinco caracteres após normalização | T31 - Rejeitar endereço curto após remover espaços |
+| T32 | E-mail inválido — POST /auth/cadastro | Nome e senha válidos; e-mail "invalido" | 422; mensagem de e-mail em português | T32 - Validar e-mail com mensagem em português |
+| T33 | Contrato de erros — GET /openapi.json | API iniciada | 200; erros 401, 403, 404, 409 e 422 do pedido usam RespostaErro | T33 - Conferir erros no contrato OpenAPI |

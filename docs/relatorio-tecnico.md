@@ -96,13 +96,15 @@ O relatório acadêmico em PDF identifica instituição, estudante, RU, cidade e
 
 O plano descreve cenários positivos e negativos de autenticação, autorização, validação, estoque, pedido, pagamento recusado, fidelidade e auditoria. A coleção Postman organiza as chamadas do fluxo e scripts para guardar tokens e IDs.
 
-Em 24/09/2026, a coleção foi executada contra uma instância local da API com um banco SQLite limpo: 31 chamadas e 31 scripts de teste passaram sem falhas. A evidência registra os fluxos positivos e negativos sem incluir credenciais.
+Em 25/09/2026, a coleção foi executada contra uma instância local da API com um banco SQLite limpo: 35 chamadas e 35 scripts de teste passaram sem falhas. A evidência registra os fluxos positivos e negativos sem incluir credenciais.
 
 ## 8 Conclusão
 
 O MVP fecha o fluxo pedido → pagamento mock → preparação → entrega, com persistência relacional, estoque por unidade, multicanalidade e autorização por perfil. Validações e erros padronizados tornam o comportamento mais previsível; auditoria registra operações relevantes. A fidelidade foi incluída como participação voluntária, com histórico de consentimento e estorno de pontos quando necessário.
 
 Campanhas promocionais e integração com um provedor real de pagamento permanecem fora do escopo implementado. Essa priorização mantém o foco em demonstrar o fluxo principal com consistência. DER, casos de uso, sequência, requisitos e endpoints descrevem o mesmo escopo que o código; a coleção Postman reproduz o percurso principal e seus cenários negativos, executados com sucesso no ambiente local.
+
+O PDF inclui apêndices com requisitos priorizados, contratos dos endpoints, cenários de teste, resultados esperados e evidências de execução. As tabelas são apresentadas como fichas para preservar a leitura.
 
 ## Referências
 

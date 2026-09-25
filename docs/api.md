@@ -8,7 +8,7 @@ Os corpos e respostas usam nomes JSON em camelCase quando indicado no contrato. 
 {
   "error": "VALIDATION_ERROR",
   "message": "Um ou mais campos são inválidos.",
-  "details": [{"field": "canalPedido", "issue": "Field required"}],
+  "details": [{"field": "canalPedido", "issue": "Campo obrigatório."}],
   "timestamp": "2026-09-24T12:00:00+00:00",
   "path": "/pedidos",
   "requestId": "identificador-da-requisicao"
@@ -101,3 +101,7 @@ Auditoria retorna uma lista como `[ {"id":8,"usuarioId":1,"acao":"PEDIDO_CRIADO"
 ## Códigos usados
 
 `200` consulta/atualização bem-sucedida; `201` recurso criado; `401` sem autenticação válida; `403` perfil sem permissão; `404` recurso ausente; `409` conflito com regra de negócio ou unicidade; `422` entrada inválida; `500` falha inesperada com mensagem genérica e `requestId` para rastreio.
+
+## Validação e documentação de erros
+
+Nomes e endereços são normalizados antes da validação de tamanho. Produto e unidade exigem nome com pelo menos dois caracteres; o endereço exige cinco caracteres após a remoção de espaços externos. As mensagens de validação são apresentadas em português. O OpenAPI documenta o modelo `RespostaErro`, seus detalhes e os códigos de erro aplicáveis a cada operação.

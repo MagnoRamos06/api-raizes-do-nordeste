@@ -1,35 +1,28 @@
 # Evidência da execução local
 
-**Data:** 24/09/2026
-**Base:** banco SQLite isolado e vazio, preparado com a migração Alembic e o seed do projeto.
-**Execução:** coleção Postman `raizes-api.postman_collection.json` via Newman, contra a API local.
-**Revalidação final:** realizada em 24/09/2026, após aplicar novamente a migração e o seed em um banco de validação limpo.
+**Revisão:** 25/09/2026.
 
-## Resultado
+## Ambiente e método
 
-- 31 requisições executadas.
-- 31 scripts de teste executados.
-- 31 asserções aprovadas.
+Banco SQLite novo e isolado, preparado com a migração Alembic e o seed. A coleção Postman foi executada por Newman contra a API local. Os dados são fictícios e as credenciais de execução não fazem parte da entrega.
+
+## Resultado da coleção
+
+- 35 requisições executadas.
+- 35 verificações aprovadas.
 - 0 falhas.
-- Migração Alembic e seed concluídos antes do início da API.
-- Verificação manual adicional: `/health`, `/docs` e `/openapi.json` responderam HTTP 200.
+- Fluxo principal, cenários negativos, fidelidade e auditoria executados.
+- Quatro cenários de regressão incluídos para normalização de texto, mensagens em português e contrato OpenAPI.
 
-## Comportamentos verificados
+## Verificação complementar
 
-- Cadastro/login de cliente e login ADMIN.
-- Proteção de rota sem token (401) e bloqueio de ação sem permissão (403).
-- Validação de campo obrigatório e quantidade negativa (422).
-- Produto inexistente (404) e estoque insuficiente (409).
-- Criação de pedido, filtro por canal, pagamento aprovado e bloqueio de pagamento repetido.
-- Transições de pedido feitas pelos perfis COZINHA e ATENDENTE.
-- Resgate de pontos, recusa do pagamento, cancelamento e estorno de estoque/pontos.
-- Consulta do evento de criação na auditoria.
-
-Uma asserção de fidelidade foi ajustada para comparar valores monetários decimais como números, pois a resposta JSON da API os representa como texto decimal (por exemplo, `"5.00"`). A coleção passou integralmente após o ajuste.
+Uma rodada independente confirmou 11 casos: nome de produto curto após retirar espaços, endereço curto após retirar espaços, e-mail inválido, senha incorreta, token inválido, paginação inválida, cadastro válido, cadastro duplicado, canal inválido, produto duplicado no pedido e tentativa de cadastro de produto por cliente. Os 11 casos retornaram os códigos esperados. Esses casos complementares não são somados às 35 verificações da coleção.
 
 ## Reproduzir
 
-Siga os passos de instalação e execução do [README](../README.md), importe a coleção e o ambiente modelo do Postman e execute os itens na ordem apresentada. Preencha as credenciais do ADMIN com os valores configurados no seed. Não use as credenciais temporárias usadas nesta validação.
+Siga o README, aplique a migração e o seed, inicie a API e importe a coleção e o ambiente em `postman/`. Preencha as credenciais locais do administrador e execute as pastas na ordem. Os cenários T30 a T33 dependem do token administrativo obtido no fim do fluxo anterior.
+
+O resultado demonstra somente os comportamentos cobertos. Não representa teste de carga nem certificação de segurança em produção.
 
 ## Resultado por requisição
 
@@ -66,3 +59,7 @@ Siga os passos de instalação e execução do [README](../README.md), importe a
 | T27 - Conferir estorno no saldo de fidelidade | 200 | Passou |
 | T28 - Login administrativo para consultar auditoria | 200 | Passou |
 | T29 - Evidenciar criação de pedido na auditoria | 200 | Passou |
+| T30 - Rejeitar nome curto após remover espaços | 422 | Passou |
+| T31 - Rejeitar endereço curto após remover espaços | 422 | Passou |
+| T32 - Validar e-mail com mensagem em português | 422 | Passou |
+| T33 - Conferir erros no contrato OpenAPI | 200 | Passou |
