@@ -171,7 +171,7 @@ Os arquivos da coleção e do ambiente local estão em `postman/`:
 
 Importe os dois arquivos no Postman, configure o endereço como `http://127.0.0.1:8000`, informe as credenciais locais do administrador e execute as requisições na ordem da coleção. A coleção prepara os demais usuários e dados necessários aos cenários.
 
-O resultado registrado em [evidência de testes](docs/evidencia-testes.md) apresenta 31 requisições e 31 verificações aprovadas, sem falhas, além das validações manuais de `/health`, `/docs` e `/openapi.json`. A execução foi realizada em 24/09/2026, após aplicar a migração e o seed em um banco SQLite vazio.
+O resultado registrado em [evidência de testes](docs/evidencia-testes.md) apresenta 35 requisições e 35 verificações aprovadas, sem falhas, além das validações manuais de `/health`, `/docs` e `/openapi.json`. A execução foi realizada em 25/09/2026, após aplicar a migração e o seed em um banco SQLite vazio.
 
 ## Banco de dados
 
