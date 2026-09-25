@@ -23,9 +23,11 @@ class CadastroUsuario(SQLModel):
     senha: str = PydanticField(min_length=8, max_length=128)
     consentimento_fidelidade: bool = False
 
-    @field_validator("nome")
+    @field_validator("nome", mode="before")
     @classmethod
     def validate_name(cls, value: str) -> str:
+        if not isinstance(value, str):
+            return value
         normalized = value.strip()
         if len(normalized) < 2:
             raise ValueError("Informe ao menos dois caracteres no nome.")
@@ -120,9 +122,11 @@ class CriarUnidade(SQLModel):
     nome: str = PydanticField(min_length=2, max_length=120)
     endereco: str = PydanticField(min_length=5, max_length=255)
 
-    @field_validator("nome", "endereco")
+    @field_validator("nome", "endereco", mode="before")
     @classmethod
     def strip_text(cls, value: str) -> str:
+        if not isinstance(value, str):
+            return value
         normalized = value.strip()
         if not normalized:
             raise ValueError("O campo não pode ficar vazio.")
@@ -143,9 +147,11 @@ class CriarProduto(SQLModel):
     descricao: str | None = PydanticField(default=None, max_length=500)
     preco: Decimal = PydanticField(gt=0, max_digits=10, decimal_places=2)
 
-    @field_validator("nome")
+    @field_validator("nome", mode="before")
     @classmethod
     def strip_name(cls, value: str) -> str:
+        if not isinstance(value, str):
+            return value
         normalized = value.strip()
         if not normalized:
             raise ValueError("O nome do produto não pode ficar vazio.")
