@@ -198,3 +198,13 @@ O DER, os diagramas de classes e de casos de uso e a sequência de criação do 
 As senhas são armazenadas com hash e as rotas verificam o perfil antes de executar ações restritas. O segredo JWT e as credenciais administrativas ficam em variáveis locais do `.env`. O programa de fidelidade depende de consentimento, e os registros de auditoria não armazenam credenciais.
 
 O projeto deve ser executado com credenciais próprias. Não use os dados de exemplo fora do ambiente local.
+
+
+## Evidências públicas
+
+- [Relatório acadêmico em PDF](5023493_Projeto_Back_End.PDF)
+- [Contrato OpenAPI](docs/openapi.json) e [visualização pública no Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/MagnoRamos06/api-raizes-do-nordeste/main/docs/openapi.json)
+- [Coleção de testes do Postman](postman/raizes-api.postman_collection.json) e [registro da execução](docs/evidencia-testes.md)
+- [Diagramas](docs/diagramas.md) e [histórico de versões](https://github.com/MagnoRamos06/api-raizes-do-nordeste/commits/main/)
+
+A visualização pública mostra os contratos da API. Para enviar requisições e reproduzir os testes, execute a aplicação localmente pelas instruções de preparação deste documento; o endereço `127.0.0.1` refere-se ao computador de quem a inicia.
