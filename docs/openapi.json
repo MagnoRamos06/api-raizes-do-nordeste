@@ -1,0 +1,3208 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Raízes do Nordeste - API",
+    "description": "API de pedidos para a rede de lanchonetes Raízes do Nordeste. Documentação pública para consulta dos contratos. Para executar requisições, inicie a API localmente conforme o README. Nenhum serviço de pagamento real é acionado.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Saúde da API"
+        ],
+        "summary": "Verificar se a API está ativa",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Check Health Get"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/health",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/cadastro": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Cadastrar um cliente",
+        "operationId": "register_user_auth_cadastro_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroUsuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioPublico"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/cadastro",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/cadastro",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/cadastro",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Autenticar e obter token de acesso",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUsuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/login",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/login",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/login",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Consultar o usuário autenticado",
+        "operationId": "read_current_user_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioPublico"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/me",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/me",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auth/usuarios-operacionais": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Cadastrar usuário interno com perfil operacional",
+        "operationId": "create_operational_user_auth_usuarios_operacionais_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroOperador"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioPublico"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/usuarios-operacionais",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/usuarios-operacionais",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/usuarios-operacionais",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/usuarios-operacionais",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auth/usuarios-operacionais",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auditoria": {
+      "get": {
+        "tags": [
+          "Auditoria"
+        ],
+        "summary": "Consultar auditoria",
+        "operationId": "list_audit_events_auditoria_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "entidade",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entidade"
+            }
+          },
+          {
+            "name": "entidade_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entidade Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuditoriaResposta"
+                  },
+                  "title": "Response List Audit Events Auditoria Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auditoria",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auditoria",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auditoria",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/auditoria",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unidades": {
+      "get": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Listar unidades",
+        "operationId": "list_units_unidades_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UnidadeResposta"
+                  },
+                  "type": "array",
+                  "title": "Response List Units Unidades Get"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Cadastrar unidade",
+        "operationId": "create_unit_route_unidades_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarUnidade"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnidadeResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/produtos": {
+      "get": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Listar produtos",
+        "operationId": "list_products_produtos_get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProdutoResposta"
+                  },
+                  "title": "Response List Products Produtos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Cadastrar produto",
+        "operationId": "create_product_route_produtos_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarProduto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProdutoResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/produtos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unidades/{unidade_id}/cardapio": {
+      "get": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Consultar cardápio e disponibilidade de uma unidade",
+        "operationId": "get_unit_menu_unidades__unidade_id__cardapio_get",
+        "parameters": [
+          {
+            "name": "unidade_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Unidade Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemCardapio"
+                  },
+                  "title": "Response Get Unit Menu Unidades  Unidade Id  Cardapio Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/cardapio",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/cardapio",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/cardapio",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes": {
+      "post": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Registrar entrada ou saída de estoque",
+        "operationId": "stock_movement_route_unidades__unidade_id__estoque__produto_id__movimentacoes_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "unidade_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Unidade Id"
+            }
+          },
+          {
+            "name": "produto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Produto Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovimentoEstoqueEntrada"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstoqueResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque/{produto_id}/movimentacoes",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unidades/{unidade_id}/estoque": {
+      "get": {
+        "tags": [
+          "Catálogo e estoque"
+        ],
+        "summary": "Consultar estoque da unidade",
+        "operationId": "get_unit_stock_unidades__unidade_id__estoque_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "unidade_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Unidade Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstoqueResposta"
+                  },
+                  "title": "Response Get Unit Stock Unidades  Unidade Id  Estoque Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/unidades/{unidade_id}/estoque",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fidelidade/me": {
+      "get": {
+        "tags": [
+          "Fidelidade e consentimento"
+        ],
+        "summary": "Consultar saldo e extrato de pontos",
+        "operationId": "read_fidelity_summary_fidelidade_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FidelidadeResumo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/me",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/me",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/me",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/fidelidade/consentimento": {
+      "post": {
+        "tags": [
+          "Fidelidade e consentimento"
+        ],
+        "summary": "Registrar consentimento para fidelidade",
+        "operationId": "update_fidelity_consent_fidelidade_consentimento_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarConsentimento"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FidelidadeResumo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/consentimento",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/consentimento",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/consentimento",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/consentimento",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/consentimento",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/fidelidade/resgates": {
+      "post": {
+        "tags": [
+          "Fidelidade e consentimento"
+        ],
+        "summary": "Resgatar pontos",
+        "operationId": "redeem_fidelity_points_fidelidade_resgates_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResgatarPontos"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResgateResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/resgates",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/resgates",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/resgates",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/resgates",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/resgates",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/fidelidade/resgates",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/pedidos": {
+      "post": {
+        "tags": [
+          "Pedidos"
+        ],
+        "summary": "Criar pedido e reservar o estoque",
+        "operationId": "create_order_route_pedidos_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarPedido"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Pedidos"
+        ],
+        "summary": "Listar pedidos visíveis ao usuário",
+        "operationId": "list_orders_pedidos_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "canalPedido",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/CanalPedido"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Canalpedido"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/StatusPedido"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PedidoResposta"
+                  },
+                  "title": "Response List Orders Pedidos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pedidos/{pedido_id}/pagamento-mock": {
+      "post": {
+        "tags": [
+          "Pedidos"
+        ],
+        "summary": "Simular aprovação ou recusa do pagamento",
+        "operationId": "mock_payment_route_pedidos__pedido_id__pagamento_mock_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pedido_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Pedido Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultadoPagamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/pagamento-mock",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/pagamento-mock",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/pagamento-mock",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/pagamento-mock",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/pagamento-mock",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/pagamento-mock",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pedidos/{pedido_id}/status": {
+      "patch": {
+        "tags": [
+          "Pedidos"
+        ],
+        "summary": "Avançar o pedido para pronto ou entregue",
+        "operationId": "update_order_status_route_pedidos__pedido_id__status_patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pedido_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Pedido Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarStatusPedido"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PedidoResposta"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "VALIDATION_ERROR",
+                  "message": "Dados de entrada inválidos.",
+                  "details": [
+                    {
+                      "field": "canalPedido",
+                      "issue": "Campo obrigatório."
+                    }
+                  ],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/status",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autenticação ausente ou inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "UNAUTHENTICATED",
+                  "message": "Autenticação ausente ou inválida.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/status",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "FORBIDDEN",
+                  "message": "Perfil sem permissão.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/status",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "NOT_FOUND",
+                  "message": "Recurso não encontrado.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/status",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno sem exposição de informações sensíveis.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "INTERNAL_ERROR",
+                  "message": "Erro interno sem exposição de informações sensíveis.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/status",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito com uma regra de negócio ou integridade.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespostaErro"
+                },
+                "example": {
+                  "error": "CONFLICT",
+                  "message": "Conflito com uma regra de negócio ou integridade.",
+                  "details": [],
+                  "timestamp": "2026-09-25T12:00:00Z",
+                  "path": "/pedidos/{pedido_id}/status",
+                  "requestId": "identificador-da-requisicao"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AtualizarConsentimento": {
+        "properties": {
+          "consentido": {
+            "type": "boolean",
+            "title": "Consentido"
+          }
+        },
+        "type": "object",
+        "required": [
+          "consentido"
+        ],
+        "title": "AtualizarConsentimento"
+      },
+      "AtualizarStatusPedido": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/StatusPedido"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "AtualizarStatusPedido"
+      },
+      "AuditoriaResposta": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "title": "Usuarioid"
+          },
+          "acao": {
+            "type": "string",
+            "title": "Acao"
+          },
+          "entidade": {
+            "type": "string",
+            "title": "Entidade"
+          },
+          "entidadeId": {
+            "type": "string",
+            "title": "Entidadeid"
+          },
+          "detalhes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detalhes"
+          },
+          "criadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criadoem"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "usuarioId",
+          "acao",
+          "entidade",
+          "entidadeId",
+          "detalhes",
+          "criadoEm"
+        ],
+        "title": "AuditoriaResposta"
+      },
+      "CadastroOperador": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "senha": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Senha"
+          },
+          "consentimento_fidelidade": {
+            "type": "boolean",
+            "title": "Consentimento Fidelidade",
+            "default": false
+          },
+          "perfil": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nome",
+          "email",
+          "senha",
+          "perfil"
+        ],
+        "title": "CadastroOperador"
+      },
+      "CadastroUsuario": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "senha": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Senha"
+          },
+          "consentimento_fidelidade": {
+            "type": "boolean",
+            "title": "Consentimento Fidelidade",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "nome",
+          "email",
+          "senha"
+        ],
+        "title": "CadastroUsuario"
+      },
+      "CanalPedido": {
+        "type": "string",
+        "enum": [
+          "APP",
+          "TOTEM",
+          "BALCAO",
+          "PICKUP",
+          "WEB"
+        ],
+        "title": "CanalPedido"
+      },
+      "CriarPedido": {
+        "properties": {
+          "unidadeId": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Unidadeid"
+          },
+          "canalPedido": {
+            "$ref": "#/components/schemas/CanalPedido"
+          },
+          "itens": {
+            "items": {
+              "$ref": "#/components/schemas/ItemPedidoEntrada"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Itens"
+          }
+        },
+        "type": "object",
+        "required": [
+          "unidadeId",
+          "canalPedido",
+          "itens"
+        ],
+        "title": "CriarPedido"
+      },
+      "CriarProduto": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descricao"
+          },
+          "preco": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,8}|(?=[\\d.]{1,11}0*$)\\d{0,8}\\.\\d{0,2}0*$)"
+              }
+            ],
+            "title": "Preco"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nome",
+          "preco"
+        ],
+        "title": "CriarProduto"
+      },
+      "CriarUnidade": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "endereco": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 5,
+            "title": "Endereco"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nome",
+          "endereco"
+        ],
+        "title": "CriarUnidade"
+      },
+      "EstoqueResposta": {
+        "properties": {
+          "unidadeId": {
+            "type": "integer",
+            "title": "Unidadeid"
+          },
+          "produtoId": {
+            "type": "integer",
+            "title": "Produtoid"
+          },
+          "quantidade": {
+            "type": "integer",
+            "title": "Quantidade"
+          }
+        },
+        "type": "object",
+        "required": [
+          "unidadeId",
+          "produtoId",
+          "quantidade"
+        ],
+        "title": "EstoqueResposta"
+      },
+      "FidelidadeResumo": {
+        "properties": {
+          "consentido": {
+            "type": "boolean",
+            "title": "Consentido"
+          },
+          "pontos": {
+            "type": "integer",
+            "title": "Pontos"
+          },
+          "extrato": {
+            "items": {
+              "$ref": "#/components/schemas/MovimentoFidelidadeResposta"
+            },
+            "type": "array",
+            "title": "Extrato"
+          }
+        },
+        "type": "object",
+        "required": [
+          "consentido",
+          "pontos",
+          "extrato"
+        ],
+        "title": "FidelidadeResumo"
+      },
+      "ItemCardapio": {
+        "properties": {
+          "produtoId": {
+            "type": "integer",
+            "title": "Produtoid"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descricao"
+          },
+          "preco": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Preco"
+          },
+          "disponivel": {
+            "type": "boolean",
+            "title": "Disponivel"
+          }
+        },
+        "type": "object",
+        "required": [
+          "produtoId",
+          "nome",
+          "descricao",
+          "preco",
+          "disponivel"
+        ],
+        "title": "ItemCardapio"
+      },
+      "ItemPedidoEntrada": {
+        "properties": {
+          "produtoId": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Produtoid"
+          },
+          "quantidade": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Quantidade"
+          }
+        },
+        "type": "object",
+        "required": [
+          "produtoId",
+          "quantidade"
+        ],
+        "title": "ItemPedidoEntrada"
+      },
+      "ItemPedidoResposta": {
+        "properties": {
+          "produtoId": {
+            "type": "integer",
+            "title": "Produtoid"
+          },
+          "quantidade": {
+            "type": "integer",
+            "title": "Quantidade"
+          },
+          "precoUnitario": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Precounitario"
+          }
+        },
+        "type": "object",
+        "required": [
+          "produtoId",
+          "quantidade",
+          "precoUnitario"
+        ],
+        "title": "ItemPedidoResposta"
+      },
+      "LoginUsuario": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "senha": {
+            "type": "string",
+            "title": "Senha"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "senha"
+        ],
+        "title": "LoginUsuario"
+      },
+      "MovimentoEstoqueEntrada": {
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoMovimentoEstoque"
+          },
+          "quantidade": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Quantidade"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "quantidade"
+        ],
+        "title": "MovimentoEstoqueEntrada"
+      },
+      "MovimentoFidelidadeResposta": {
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoMovimentoFidelidade"
+          },
+          "pontos": {
+            "type": "integer",
+            "title": "Pontos"
+          },
+          "pedidoId": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pedidoid"
+          },
+          "criadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criadoem"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "pontos",
+          "criadoEm"
+        ],
+        "title": "MovimentoFidelidadeResposta"
+      },
+      "PagamentoResposta": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/StatusPagamento"
+          },
+          "referencia": {
+            "type": "string",
+            "title": "Referencia"
+          },
+          "valor": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Valor"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "referencia",
+          "valor",
+          "payload"
+        ],
+        "title": "PagamentoResposta"
+      },
+      "PedidoResposta": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "unidadeId": {
+            "type": "integer",
+            "title": "Unidadeid"
+          },
+          "canalPedido": {
+            "$ref": "#/components/schemas/CanalPedido"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusPedido"
+          },
+          "total": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total"
+          },
+          "descontoFidelidade": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Descontofidelidade",
+            "default": "0.00"
+          },
+          "itens": {
+            "items": {
+              "$ref": "#/components/schemas/ItemPedidoResposta"
+            },
+            "type": "array",
+            "title": "Itens"
+          },
+          "pagamento": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PagamentoResposta"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "unidadeId",
+          "canalPedido",
+          "status",
+          "total",
+          "itens"
+        ],
+        "title": "PedidoResposta"
+      },
+      "PerfilUsuario": {
+        "type": "string",
+        "enum": [
+          "CLIENTE",
+          "ATENDENTE",
+          "COZINHA",
+          "GERENTE",
+          "ADMIN"
+        ],
+        "title": "PerfilUsuario"
+      },
+      "ProdutoResposta": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descricao"
+          },
+          "preco": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Preco"
+          },
+          "ativo": {
+            "type": "boolean",
+            "title": "Ativo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nome",
+          "descricao",
+          "preco",
+          "ativo"
+        ],
+        "title": "ProdutoResposta"
+      },
+      "ResgatarPontos": {
+        "properties": {
+          "pedidoId": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Pedidoid"
+          },
+          "pontos": {
+            "type": "integer",
+            "multipleOf": 100.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Pontos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pedidoId",
+          "pontos"
+        ],
+        "title": "ResgatarPontos"
+      },
+      "ResgateResposta": {
+        "properties": {
+          "pedidoId": {
+            "type": "integer",
+            "title": "Pedidoid"
+          },
+          "pontosResgatados": {
+            "type": "integer",
+            "title": "Pontosresgatados"
+          },
+          "desconto": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Desconto"
+          },
+          "totalAtualizado": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Totalatualizado"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pedidoId",
+          "pontosResgatados",
+          "desconto",
+          "totalAtualizado"
+        ],
+        "title": "ResgateResposta"
+      },
+      "ResultadoPagamento": {
+        "properties": {
+          "resultado": {
+            "$ref": "#/components/schemas/ResultadoPagamentoMock"
+          }
+        },
+        "type": "object",
+        "required": [
+          "resultado"
+        ],
+        "title": "ResultadoPagamento"
+      },
+      "ResultadoPagamentoMock": {
+        "type": "string",
+        "enum": [
+          "APROVADO",
+          "RECUSADO"
+        ],
+        "title": "ResultadoPagamentoMock"
+      },
+      "StatusPagamento": {
+        "type": "string",
+        "enum": [
+          "PENDENTE",
+          "APROVADO",
+          "RECUSADO"
+        ],
+        "title": "StatusPagamento"
+      },
+      "StatusPedido": {
+        "type": "string",
+        "enum": [
+          "AGUARDANDO_PAGAMENTO",
+          "EM_PREPARACAO",
+          "PRONTO",
+          "ENTREGUE",
+          "CANCELADO"
+        ],
+        "title": "StatusPedido"
+      },
+      "TipoMovimentoEstoque": {
+        "type": "string",
+        "enum": [
+          "ENTRADA",
+          "SAIDA"
+        ],
+        "title": "TipoMovimentoEstoque"
+      },
+      "TipoMovimentoFidelidade": {
+        "type": "string",
+        "enum": [
+          "GANHO",
+          "RESGATE",
+          "ESTORNO"
+        ],
+        "title": "TipoMovimentoFidelidade"
+      },
+      "TokenResposta": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token"
+        ],
+        "title": "TokenResposta"
+      },
+      "UnidadeResposta": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome"
+          },
+          "endereco": {
+            "type": "string",
+            "title": "Endereco"
+          },
+          "ativa": {
+            "type": "boolean",
+            "title": "Ativa"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nome",
+          "endereco",
+          "ativa"
+        ],
+        "title": "UnidadeResposta"
+      },
+      "UsuarioPublico": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "perfil": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nome",
+          "email",
+          "perfil"
+        ],
+        "title": "UsuarioPublico"
+      },
+      "DetalheErro": {
+        "properties": {
+          "field": {
+            "title": "Field",
+            "type": "string"
+          },
+          "issue": {
+            "title": "Issue",
+            "type": "string"
+          }
+        },
+        "required": [
+          "field",
+          "issue"
+        ],
+        "title": "DetalheErro",
+        "type": "object"
+      },
+      "RespostaErro": {
+        "properties": {
+          "error": {
+            "title": "Error",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/DetalheErro"
+            },
+            "title": "Details",
+            "type": "array"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "requestId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Requestid"
+          }
+        },
+        "required": [
+          "error",
+          "message",
+          "timestamp",
+          "path"
+        ],
+        "title": "RespostaErro",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "Execução local após seguir o README; não é um servidor público."
+    }
+  ]
+}
