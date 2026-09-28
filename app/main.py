@@ -6,7 +6,7 @@ from app.api.routes.catalog import router as catalog_router
 from app.api.routes.fidelity import router as fidelity_router
 from app.api.routes.health import router as health_router
 from app.api.routes.orders import router as orders_router
-from app.api.errors import install_error_handlers
+from app.api.errors import install_error_handlers, install_openapi
 app = FastAPI(
     title="Raízes do Nordeste - API",
     description="API de pedidos para a rede de lanchonetes Raízes do Nordeste.",
@@ -20,3 +20,5 @@ app.include_router(audit_router)
 app.include_router(catalog_router)
 app.include_router(fidelity_router)
 app.include_router(orders_router)
+
+install_openapi(app)
